@@ -1,0 +1,21 @@
+<!-- layout inheritance  -->
+{% extends "bootstrap/base.html" %}
+<!DOCTYPE html>
+<html>
+    <head>
+
+        {% if title %}
+            <title> Image Locator  -  {{page_title}} </title>
+        {% else %}
+             <title> Image Locator </title>
+        {% endif %}
+        
+       
+    </head>
+    <body>
+
+        {% block content %} {% endblock %}
+      
+    </body>
+
+</html>
