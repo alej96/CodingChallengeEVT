@@ -1,5 +1,11 @@
 from PIL import Image
 from PIL.ExifTags import TAGS, GPSTAGS
+import requests
+from io import BytesIO
+
+from pygeocoder import Geocoder
+import pandas as pd
+import numpy as np
 
 
 class ImageMetaData(object):
@@ -9,11 +15,17 @@ class ImageMetaData(object):
     '''
     exif_data = None
     image = None
+    
 
     def __init__(self, img_path):
-        self.image = Image.open(img_path)
+        response = requests.get(img_path)
+        print("-------imgage path-------")
+        print(img_path)
+        self.image = Image.open(BytesIO(response.content))
+       # self.image = img_path
         #print(self.image._getexif())
         self.get_exif_data()
+        
         super(ImageMetaData, self).__init__()
 
     def get_exif_data(self):
@@ -77,6 +89,19 @@ class ImageMetaData(object):
                 lng = self.convert_to_degress(gps_longitude)
                 if gps_longitude_ref != "E":
                     lng = 0 - lng
+
+
+
         return lat, lng
+
+    def geoCodeFromLatLng(self, lat , lng):
+        
+        geo_results = Geocoder.reverse_geocode(lat, lng)
+
+        city = geo_results.city
+        zip_code = geo_results.zip_code
+        return  city
+
+
 
 

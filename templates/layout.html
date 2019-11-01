@@ -5,16 +5,18 @@
     <head>
 
         {% if title %}
-            <title> Image Locator  -  {{page_title}} </title>
+            <title> Image Locator  -  {{ page_title }} </title>
         {% else %}
              <title> Image Locator </title>
         {% endif %}
-        
-       
+
+        {% block title_section %} {% endblock %}
+      
     </head>
     <body>
 
         {% block content %} {% endblock %}
+
       
     </body>
 
