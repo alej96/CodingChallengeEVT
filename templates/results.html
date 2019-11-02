@@ -37,4 +37,14 @@
                     </tr>
                 {% endfor %}
         </table> 
+
+          <form action="/" method="POST">
+            <div class="border-top pt-3">
+                <button type = 'submit'  formaction="{{ url_for('map') }}"  value = "{{ posts }}" > 
+                <!-- <button type = 'submit' formmethod = "POST"> -->
+                    Open Map!
+                </button>
+            </div>
+        </form>
+        
 {% endblock content %}

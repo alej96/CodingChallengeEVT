@@ -1,7 +1,20 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+    <html>
+    <head>
 
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <title>Photo Map </title>
+            {{trdmap.js}}
+  
+    </head>
+    <body>
+            <h2> 3rd map generated in view</h2>
+            <h3> Example for multiple markers with infoboxes</h3>
+            <h4>Click in markers to see it in action!</h4>
+            <h4>Click in the YELLOW marker to see HTML rendered</h4>
+            {{trdmap.html}}
+    
 
-{% block content %}
-
-       <h1>Maps on Progress....</h1>
-{% endblock content %}
+    </body>
+</html>

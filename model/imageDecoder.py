@@ -29,7 +29,7 @@ class ImageMetaData(object):
         super(ImageMetaData, self).__init__()
 
     def get_exif_data(self):
-        """Returns a dictionary from the exif data of an PIL Image item. Also converts the GPS Tags"""
+        #Returns a dictionary from the exif data of an PIL Image item. Also converts the GPS Tags
         exif_data = {}
         info = self.image._getexif()
         if info:
@@ -54,8 +54,8 @@ class ImageMetaData(object):
 
     def convert_to_degress(self, value):
 
-        """Helper function to convert the GPS coordinates 
-        stored in the EXIF to degress in float format"""
+        #Helper function to convert the GPS coordinates 
+       # stored in the EXIF to degress in float format
         d0 = value[0][0]
         d1 = value[0][1]
         d = float(d0) / float(d1)
@@ -71,7 +71,7 @@ class ImageMetaData(object):
         return d + (m / 60.0) + (s / 3600.0)
 
     def get_lat_lng(self):
-        """Returns the latitude and longitude, if available, from the provided exif_data (obtained through get_exif_data above)"""
+        #Returns the latitude and longitude, if available, from the provided exif_data (obtained through get_exif_data above)
         lat = None
         lng = None
         exif_data = self.get_exif_data()

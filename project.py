@@ -1,7 +1,9 @@
-import presenter.imageToJson as imageToJson
 import os, sys
 sys.path.append("model")
+import presenter.imageToJson as imageToJson
+sys.path.append("model")
 import model.imageDecoder as imageDecoder
+sys.path.append("model")
 import model.geoCoder as geoCoder
 from flask import Flask, redirect, render_template, request, session, url_for
 from flask_bootstrap import Bootstrap
@@ -12,21 +14,24 @@ from pygeocoder import Geocoder
 import pandas as pd
 import numpy as np
 import geocoder as googleGeocode
-
+from flask_googlemaps import GoogleMaps as GoogleMaps
+from flask_googlemaps import Map, icons
 
 
 
 app = Flask(__name__)
 dropzone = Dropzone(app)
 
-#dont forget about bootstrap in layout.html
-Bootstrap(app)
+
+
 # Dropzone settings
 app.config['DROPZONE_UPLOAD_MULTIPLE'] = True
 app.config['DROPZONE_ALLOWED_FILE_CUSTOM'] = True
 app.config['DROPZONE_ALLOWED_FILE_TYPE'] = 'image/*'
 app.config['DROPZONE_REDIRECT_VIEW'] = 'results'
 app.config['SECRET_KEY'] = '1234'
+# set key as configin the app
+app.config['GOOGLEMAPS_KEY'] = 'AIzaSyDbqMl372WFLuNl3P-OzksyAWqw5njSHSU'
 
 # Uploads settings
 app.config['UPLOADED_PHOTOS_DEST'] = os.getcwd() + '/uploads'
@@ -35,6 +40,8 @@ photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
 patch_request_class(app)  # set maximum file size, default is 16MB
 
+Bootstrap(app)
+GoogleMaps(app)
 
 @app.route('/',  methods=['GET', 'POST'])
 @app.route('/index',  methods=['GET', 'POST'])
@@ -66,20 +73,13 @@ def index():
         session['file_urls'] = file_urls
         return "uploading..."
 
-    path1 = 'testData/data0.jpg'
-    path2 = 'testData/data2.jpg'
-    #image_path_list.append(path1)
-   # image_path_list.append(path2)
+
     #posts = imageToJson.convertImage(image_path_list = image_path_list)
 
 
     return render_template('index.html')
 
-@app.route('/map')
-def about():
-    return render_template('map.html')
-
-@app.route('/results')
+@app.route('/results',methods = ['POST', 'GET'])
 def results():
      # redirect to home if no images to display
     if "file_urls" not in session or session['file_urls'] == []:
@@ -89,8 +89,12 @@ def results():
     file_urls = session['file_urls']
     session.pop('file_urls', None)
 
-
-    posts= []
+  # set session for image data
+    if "imgData" not in session:
+        session['imgData'] = []
+    # list to hold the data object
+    posts = session['imgData']
+   # posts= []
     image_path_list = []
     #Extract data from images
     if request.method == 'GET':
@@ -144,14 +148,69 @@ def results():
                     'country' : 'Unknown'
                     
                 })
+            #save data into sesion
+            session['imgData'] = posts
+
+    #redirect to maps page
+    if request.method == 'POST':
+        return redirect(url_for('map', posts))
     
     return render_template('results.html', file_urls=file_urls, posts = posts)
 
-# @app.route("/upload", methods=["POST"])
-# def upload():
-#     uploaded_files = app.request.files.getlist("file[]")
-#     print (uploaded_files)
-#     return ""
+@app.route('/map',methods = ['POST', 'GET'])
+def map():
+
+
+    # redirect to results if no images to display
+    if "imgData" not in session or session['imgData'] == []:
+        return redirect(url_for('results'))
+        
+    # set the file_urls and remove the session variable
+    imgDataList = session['imgData']
+    session.pop('imgData', None)
+
+    print(imgDataList)
+
+#    googleMap = googleMapReator()
+
+    if request.method == 'POST':
+       # result = request.form
+       print("post method!!!!!!!!!!!!!!!!!")
+
+    mapData = []
+    latitude = 0
+    longitude = 0
+    image_path = ''
+    for imgData in imgDataList:
+        latitude = imgData['latitude']
+        longitude = imgData['longitude']
+        image_path = imgData['image']
+        city = imgData['city']
+        zip_code = imgData['zip_code']
+        country = imgData['country']
+        
+        mapData.append({
+                'icon': icons.dots.blue,
+                'lat': latitude,
+                'lng': longitude,
+                'infobox': (
+                    "<p>Image taken at<b style='color:#c2c5cc double;'> " +
+                         city + ", " + country + " </b>!</p>"                   
+                    "<img style='height: 50px' src= " + image_path + ">"     
+                )
+            } ) 
+        
+    # creating a map in the view
+    trdmap = Map(
+        identifier="trdmap",
+        varname="trdmap",
+        lat= latitude,
+        lng= longitude,
+        markers=mapData       
+        
+    )
+    return render_template('map.html',trdmap=trdmap)
+
 
 if __name__ == 'main':
     
