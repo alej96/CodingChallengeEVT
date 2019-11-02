@@ -83,11 +83,13 @@ def index():
 def results():
      # redirect to home if no images to display
     if "file_urls" not in session or session['file_urls'] == []:
-        return redirect(url_for('index'))
+       #  session['file_urls'] = session['file_urls_temp']
+         return redirect(url_for('index'))
         
     # set the file_urls and remove the session variable
     file_urls = session['file_urls']
-    session.pop('file_urls', None)
+    #session['file_urls_temp'] = session['file_urls']
+   # session.pop('file_urls', None)
 
   # set session for image data
     if "imgData" not in session:
@@ -97,74 +99,73 @@ def results():
    # posts= []
     image_path_list = []
     #Extract data from images
-    if request.method == 'GET':
+    for image_path in file_urls:
+        meta_data = imageDecoder.ImageMetaData(image_path)
+        latlng =meta_data.get_lat_lng()
+        
+        print("===============latlong======================")
+        print(latlng)
+        lat = latlng[0]
+        lng = latlng[1]
+        print(lat)
+        print (lng)
+        
 
-        for image_path in file_urls:
-            meta_data = imageDecoder.ImageMetaData(image_path)
-            latlng =meta_data.get_lat_lng()
+        # googleGeo = googleGeocode.google([lat, lng], method = 'reverse')
+        # city2 = googleGeo.city
+        #print(city2)
+        #check if it have latlng data
+        if lat is not None or lng is not None:
             
-            print("===============latlong======================")
-            print(latlng)
-            lat = latlng[0]
-            lng = latlng[1]
-            print(lat)
-            print (lng)
-          
-
-            # googleGeo = googleGeocode.google([lat, lng], method = 'reverse')
-            # city2 = googleGeo.city
-            #print(city2)
-            #check if it have latlng data
-            if lat is not None or lng is not None:
-               
-              #revecse geocode lat,long
-                geocoder = Geocoder(api_key='AIzaSyDbqMl372WFLuNl3P-OzksyAWqw5njSHSU')
-                geo_results = geocoder.reverse_geocode(lat, lng)
-            #   zip_code = imageDecoder.geoCodeFromLatLng(48.8566, 2.3522)
-            #  zip_code = latlng[2]
-                zip_code = geo_results.postal_code
-                city = geo_results.city
-                country = geo_results.country
-                print(geo_results)
-               
-                posts.append(
-                {
-                    'image' : image_path,
-                    'latitude' : lat,
-                    'longitude': lng,
-                    'zip_code' : zip_code,
-                    'city' : city,
-                    'country' : country
-                    
-                })
-            else:
-                posts.append(
-                {
-                    'image' : image_path,
-                    'latitude' : 'Unknown',
-                    'longitude': 'Unknown',
-                    'zip_code' : 'Unknown',
-                    'city' : 'Unknown',
-                    'country' : 'Unknown'
-                    
-                })
-            #save data into sesion
-            session['imgData'] = posts
+            #revecse geocode lat,long
+            geocoder = Geocoder(api_key='AIzaSyDbqMl372WFLuNl3P-OzksyAWqw5njSHSU')
+            geo_results = geocoder.reverse_geocode(lat, lng)
+        #   zip_code = imageDecoder.geoCodeFromLatLng(48.8566, 2.3522)
+        #  zip_code = latlng[2]
+            zip_code = geo_results.postal_code
+            city = geo_results.city
+            country = geo_results.country
+            print(geo_results)
+            
+            posts.append(
+            {
+                'image' : image_path,
+                'latitude' : lat,
+                'longitude': lng,
+                'zip_code' : zip_code,
+                'city' : city,
+                'country' : country
+                
+            })
+        else:
+            posts.append(
+            {
+                'image' : image_path,
+                'latitude' : 'Unknown',
+                'longitude': 'Unknown',
+                'zip_code' : 'Unknown',
+                'city' : 'Unknown',
+                'country' : 'Unknown'
+                
+            })
+        #save data into sesion
+        session['imgData'] = posts
 
     #redirect to maps page
     if request.method == 'POST':
         return redirect(url_for('map', posts))
+    
     
     return render_template('results.html', file_urls=file_urls, posts = posts)
 
 @app.route('/map',methods = ['POST', 'GET'])
 def map():
 
-
+    
     # redirect to results if no images to display
     if "imgData" not in session or session['imgData'] == []:
         return redirect(url_for('results'))
-        
+    
     # set the file_urls and remove the session variable
     imgDataList = session['imgData']
     session.pop('imgData', None)
@@ -217,7 +218,7 @@ def map():
         identifier="trdmap",
         varname="trdmap",
         style=(
-            "top: 60px;"
+            # "top: 100px;"
             "height:100%;"
             "width:100%;"
             "left:0;"
@@ -233,7 +234,16 @@ def map():
     )
     return render_template('map.html',trdmap=trdmap)
 
+@app.route('/documentation')
+def documentation():
+    return render_template('documentation.html')
 
+@app.route('/testingData')
+def testingData():
+    return render_template('testingData.html')
+@app.route('/about')
+def about():
+    return render_template('about.html')
 if __name__ == 'main':
     
     app.debug = True

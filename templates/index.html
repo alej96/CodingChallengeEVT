@@ -1,13 +1,5 @@
 {% extends "layout.html" %}
 
-
-
-<!-- {% block navbar %}
-    <div class="navbar navbar-fixed-top" style = "fill: aquamarine;">
-        EVT nav baar
-    </div>
-{% endblock navbar%} -->
-
 {% block content %}
     <!-- create dropzone box -->
     {{ dropzone.load_css() }}
@@ -16,26 +8,12 @@
     <h3 style="text-align: center;"><span style="text-decoration: underline;">
         <strong>Welcome to the Image Locator App</strong></span></h3>
     <p>&nbsp;</p>
-    <p ><strong>Please upload your images here!:  </strong></p>
+    <p ><strong>Please upload your images below:  </strong></p>
         
 
     {{ dropzone.create(action_view='index') }}
     {{ dropzone.load_js() }}
     {{ dropzone.config() }}
-
-    <div class="col-md-4">
-            <div class="content-section">
-            <h3>Our Sidebar</h3>
-            <p class='text-muted'>You can put any information here you'd like.
-                <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Latest Posts</li>
-                <li class="list-group-item list-group-item-light">Announcements</li>
-                <li class="list-group-item list-group-item-light">Calendars</li>
-                <li class="list-group-item list-group-item-light">etc</li>
-                </ul>
-            </p>
-            </div>
-
 
     
 {% endblock content %}
