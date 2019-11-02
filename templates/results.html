@@ -1,50 +1,53 @@
-<!-- # templates/results.html -->
-
 {% extends "layout.html" %}
+<!-- # templates/results.html -->
+{% block title %}
+    <!-- {{super()}} -->
+  <title > Images Resutls</title> 
+{% endblock title %}
+
 
 {% block content %}
+    <!-- {{super()}} -->
+    <!-- <ul>
+    {% for file_url in file_urls %}
+        <li><img style="height: 150px" src="{{ file_url }}"></li>
+    {% endfor %}
+    </ul> -->
 
-<a href="{{ url_for('index') }}">Back</a><p>
-<!-- <ul>
-{% for file_url in file_urls %}
-    <li><img style="height: 150px" src="{{ file_url }}"></li>
-{% endfor %}
-</ul> -->
 
 
- <p style="text-align: left;"><strong><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAIIAggMBEQACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAABQcBBAYDAv/EAD4QAAEDAwEEBwMKBQUBAAAAAAEAAgMEBQYREiExQQcTIlFhcbEygcEUFSM3UnJ0kaHhQlRilKMzkrLR0iT/xAAaAQEAAwEBAQAAAAAAAAAAAAAAAgMEBQEG/8QALxEAAgIBAwICCgIDAQAAAAAAAAECAwQREjETIQWBIiMyMzRBUWFxoRRSQpHRJP/aAAwDAQACEQMRAD8AvFAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQHy57WglxAA4knggOeuWb2G3ktdWCd4OhbTDbIPp+qtjTORktzqa+Xr+CMb0nWNztDT3Bo7zE34OU/wCNMzrxWn6P9f8AToLTklpu+goK2J8hGvVOOy//AGneqpVyjyjZVkVW+yyVB1UC8ygCAIAUBqV9yo7dF1tdUxQM75Hga+XevVFvghOyNa1k9DmanpJsMMhYxtXPodNqOIafqQr1jTZhl4nRF6d2etH0h4/UvDXyz05POaLQfmNVGWPNEoeI0Temun5OiorhSV8ImoqiKeP7Ubw5VNNcmyFkZrWL1NkHVeEzKAICPvV2pbNQPrKyTZY3cAOLzyAUoxcnoiq22NUN0iszPkWe1r44XGmtzHdoAkMaPH7R05LX6uld+7OPuvzZdu0TYdb8IsX0VwqZLjUtOj2x6kA927cPzXm66zuloT6WFR2m9WY+dcAedl1pnaO8NP8A6TZevmOvgv8AxPo4pZbywz4ndC2pjG0IJHnUH1avOrOD0mjx4dNq3Y8u5v4xlddbbj8x5RqyQENjmfx8A48weRXllSkt8C7Gy5wn0b+fqWGDqsp1TKAFAcxmWVxY/TCOICWulH0cZ4NH2neHqraq3N/Yx5eWqI9uWclT41NXMN6za4vgidoRG9+jj4afw+Q3q/q7fRrRgjiua6uTLRElYqrEK66xWq22WObaa4meaIHgP6t5UJq2K3Nl9MsSyfThDXyIue+YhNVTUdfj4pmskczroGgHcdNd2hVihbpuTKJ34mrhKGn4Pirxyagh+e8MuMlRTje5sbu20Dl46dxCKxS9GxdzyeM4Lq40tUdVhGXtvrDSVYbHXxjU7O5sg5kePgqLaXDuuDdh5ivW2XJ16pNwQFU5tUT5Hl0FipToyB+xry2iNXO9w3e5balshvZw8yUsjIVMeEe+VVrqQ0uIY20tJAbKWHe5x/hJ/UlRrinrZMnk2bdMak6DH8BtNvgY6shbV1WnbdIOyD4N4KueRKXBqo8PqgvSWrJ2WxWmWPq5LbSFvd1IVW+X1NToqa0cUcjkmECkBumMufTVcGsnUsO533e4+HAq+F2vozMF+Dt9ZR2aNTbiz3HZGPjYy+UI7tNv9j+hUu9M/syvtm06cTRO9Hl9dcrWaOqdrW0fYeHbi5vI+7gfJVXQ2y1XDNODkOyG2XtI65Um8j75c4bRbJ62oI2Y29luvtO5AealCLlLRFV1qqg5MrzHoo6g1mZZIdqON2tOx3BzuG4c9NwHjvWqxtaVROVQlLdlXeR5Wy2XPPq91wuc7oKCN2jGt/4t+LklKNK0XJGuqzNlvsekTwwmnZSdIUlNGSWQyTxt146DUD0UrnrVqRwoqGW4r5akfZLRDfMvqKCpc9kb5JnFzOIIJ0UpzcK00VVUxuyZRl9zbIunR/fQA/rqWbfu3NmZz3cnBeejfHXhk/W4Fnfun+z2y2lbarjQZLY3bNPVkSt04Nk46eRHLwKjU96cJcksuPSnHIq4ZaVprWXG3U1ZF7M8TXgd2o4LHJbXoduuasgpL5m4vCZVfRmDXZNcbhL2ntYXDze79ltyO0FE4fhvrLpWPk82Y1l1Ne5rrSQxtqHyPcHuka7c49xXnVqcdrPVi5UbXZHklNnpF+1D/jUdaC/TP+w06RvtQ/415rQP/f8AYwW9Ip/ih/xprQNM/wCxo2LHsptuQNuj6WJxdITO1sjRtB3tbv1U52VyjtKqMXJru6mn5NrKoZMWyumyGkYfktQ4tqGNG4HTtfmN/mFGt9SGxksmLxr1dHh8lhU9RFU00dRA8PikYHscOYKytadmdWMlJKS+ZWuR1MmZZVBZaJ7jQ0zz1jxw1HtO+AWyC6UNz5OPkTeVeqo+yjXyWc329UeM2Ts0VKer7Pskj2neQGq9rWyLslyQyH1rI49fCLPttDBbqGGjpmbMULQ1o+Kxybk9WdqEFCKiuEVfin1nVf4ip9XLbb7pHFxfjZeZ8YO0t6QpmniH1HqUu90jzD+Ml5nWdKFE2oxl05HbppGvafA7j6qjHek9Dd4jBSo1+hykbvl3RXMH6uNHWAMJ5cD6PIV/F/5MCe/AevyZ2HRjM6bE4Wvdr1Uj2DwGu71WfIWkzo+HS1x0dYqTcVT0YO+R5FcbfIdmR0ZaPNjt/qtuRo4qSOH4a9lsoPkioa3Ka29S22mudZ8pa942HVBaOyd/NS0qjFNopVmVO11xk9SW+Zc//nKr+9/dQ30Gjo5/9v2Y+Zc//nKr+9/dN9A6Of8A2/Zn5lz/APnKr+9/dN9A6Of/AG/YfaM/bE7/AOupIA10FWCT+qb6A6s/T2v2SGL3EZbYKyw3aRzq2NvZkk9p2/c7zadNVGyPSkpx4Lca3+VVKmzkgKXJ62xWKux+aN7atjzHG/X/AEwfa/bzVjqU5Ka4MkcqyiuVLXc34iMNxJ0jxpd7oOzydEzTn5epUX62f2RamsSjV+1In+jXHzbrebhVM0qqsat2hvYzkPfx/JV5Fm6WiNXh+N04b5cs7ZZzolS4p9Z1X+IqfVy3W+5RwsX42XmMN+sep+/UfFeXe6R7ifGS8yzrvbae72+Whq9rqZNNrYOh3HXj7lkjJxeqOxbXGyLjLgjKfErZT2WotEfXfJah/WP1k7Wu7gfcFJ2yctxTHErjW61wzcsNlpbFSOpaLrOrc8vPWO2jqVGc3N6sspojTHbEk1EuKpzSmqMby2C+Ujfop39Zpy2tBtNPnx962VNWQ2M4mZF4+Qro8M2cktBvTYcnxd7nTHR00cZ0e1w5jxHAjn6+Qnt9XMlkU9XTIo5PexdI8bYxT36CRk7Oy6WJuuv3m8QV5PHfMSdPiaS0tWjOrtOU2W71IprfWdbOWl2x1T27hx4jRUyqnFatG6rLqtltg9X5k2qzQYQFZZrQ1GNZFT5FbmfQyP8ApWjgHabwfBw/Va6pKyGx8nGzK3j3K+HD5JWqs9tvVwosq61jaBkJmqGuHEt3jXy36+ShvlBOBonTVdOORr25/wBEBaoZc4y99dUsPzdTHc08NkHst8zxPvVktKYafMyVp5mRvfsotZrQ0AAAeSxncPpAVLin1nVf4ip9XLbb7pHCxfjZflmcOGnSRUjufUfFLfco9xfjZeZbKxHcCAIAgNK7WylutE+krYxJE/lzB7weRXsZOL1RXZVGyO2S7FY1NnyPC6x9RaXST0biNXMbtAj+tvf4hbFOu1aS5ONKnIxJbq+6PY5hYbtoMjsbetG4yw7z8CE6M4v0GS/m0WrS6HcmcOOJyXvrLCKmOqETvo5NrZ2d2vHVVW9XT0zTi/xHZrTyd4s50ggNO7UENzoJqKpGsczdk+HcR4hexbi9UV21xsg4S+ZTVQb3a+vxRpcWyzDRjR7evDQ9x5+S6C2S9Yz56Tvrbx/qy2cVssVis8VGzQye3M4fxPI3/wDXuWGybnLU7uNQqa1FeZMKBoCAqbFfrOq/xFT6uW233KOFi/Gy8zOIfWVVffn+KW+5R7i/Gy8y2FiO4EAQBAEBjRARtbYLTX6mst1NK48XGMa/nxUlOS4ZVKiuftRPC2YvaLVXGtoKXqZtks1DyRodNd2vgpStnJaNkK8WquW6K0ZNKs0BAEBHTWejnu8F0ki1qoGFjHctD8Rv/MqSk0tpU6YOasa7okVEtCAICEo8XtdFdX3Sngc2re573PMhI1dx3cOam7JNbWZ4YtcJuyK7maLGLXRXV9zp4Htq3lxLjISO1x3cF67JOO18CGNXCfUS7k0qzQEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEB//Z" alt="EVT Logo" width="60" height="60" /></strong></p>
-<p style="text-align: right;"><strong>2019-10-30</strong></p>
-<h3><strong>Images Results:</strong></h3>
+    <h3><strong>Images Results:</strong></h3>
 
-<style>
-    table, th, td {
-        border: 3px double black; margin: 10%;
-    }
-</style>
-        <table style="width:100%">
-                <tr>
-                    <th >Image</td>
-                    <th >Zip Code</td>
-                    <th >City</td>
-                    <th >Country</td>
-                </tr>
-                {% for post in posts %}
+    <form style="text-align: center;" action="/" method="POST">
+        <div class="border pt-3" style="fill: aquamarine;">
+            <button type = 'submit'  formaction="{{ url_for('map') }}"  value = "{{ posts }}" > 
+            <!-- <button type = 'submit' formmethod = "POST"> -->
+                Open Map!
+            </button>
+        </div>
+    </form>
+
+    <style>
+        table, th, td {
+            border: 3px double black; margin: 10%;
+        }
+    </style>
+            <table style="width:80%">
                     <tr>
-                        <td ><img style="height: 150px" src="{{ post.image }}"></td>
-                        <td >{{ post.zip_code }}</td>
-                        <td > {{ post.city }} </td>
-                        <td >{{ post.country }} </td>
+                        <th >Image</td>
+                        <th >Zip Code</td>
+                        <th >City</td>
+                        <th >Country</td>
                     </tr>
-                {% endfor %}
-        </table> 
+                    {% for post in posts %}
+                        <tr>
+                            <td ><img style="height: 150px" src="{{ post.image }}"></td>
+                            <td >{{ post.zip_code }}</td>
+                            <td > {{ post.city }} </td>
+                            <td >{{ post.country }} </td>
+                        </tr>
+                    {% endfor %}
+            </table> 
 
-          <form action="/" method="POST">
-            <div class="border-top pt-3">
-                <button type = 'submit'  formaction="{{ url_for('map') }}"  value = "{{ posts }}" > 
-                <!-- <button type = 'submit' formmethod = "POST"> -->
-                    Open Map!
-                </button>
-            </div>
-        </form>
-        
+            
 {% endblock content %}

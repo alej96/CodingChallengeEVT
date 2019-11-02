@@ -1,20 +1,19 @@
-<!DOCTYPE html>
-    <html>
-    <head>
+{% extends "layout.html" %}
+
+{% block title %} 
 
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <title>Photo Map </title>
             {{trdmap.js}}
   
-    </head>
-    <body>
-            <h2> 3rd map generated in view</h2>
-            <h3> Example for multiple markers with infoboxes</h3>
-            <h4>Click in markers to see it in action!</h4>
-            <h4>Click in the YELLOW marker to see HTML rendered</h4>
-            {{trdmap.html}}
-    
+{% endblock title %}
+{% block content %}
+        <p>&nbsp;</p>
+        <h2 style="text-align: left;"><span style="text-decoration: underline;">
+                <strong>Map of all the photos taken</strong></span></h2>
 
-    </body>
-</html>
+        {{trdmap.html}}
+
+
+{% endblock content %}

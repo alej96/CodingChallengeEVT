@@ -189,13 +189,25 @@ def map():
         zip_code = imgData['zip_code']
         country = imgData['country']
         
-        mapData.append({
-                'icon': icons.dots.blue,
-                'lat': latitude,
-                'lng': longitude,
+        if(latitude != 'Unknown' or longitude != 'Unknown'):
+            mapData.append({
+                    'icon': icons.dots.blue,
+                    'lat': latitude,
+                    'lng': longitude,
+                    'infobox': (
+                        "<p>Image taken at<b style='color:#c2c5cc double;'> " +
+                            city + ", " + country + " </b>!</p>"                   
+                        "<img style='height: 50px' src= " + image_path + ">"     
+                    )
+                } ) 
+        else:
+            mapData.append({
+                'icon': icons.dots.red,
+                'lat': 0,
+                'lng': 0,
                 'infobox': (
-                    "<p>Image taken at<b style='color:#c2c5cc double;'> " +
-                         city + ", " + country + " </b>!</p>"                   
+                    "<p>Images with <b style='color:#c2c5cc double;'> " 
+                        "Unknwon Location </b>!</p>"                   
                     "<img style='height: 50px' src= " + image_path + ">"     
                 )
             } ) 
@@ -204,9 +216,19 @@ def map():
     trdmap = Map(
         identifier="trdmap",
         varname="trdmap",
-        lat= latitude,
-        lng= longitude,
-        markers=mapData       
+        style=(
+            "top: 60px;"
+            "height:100%;"
+            "width:100%;"
+            "left:0;"
+            "position:absolute;"
+            "z-index:200;"
+           
+        ),
+        lat= 0,
+        lng= 0,
+        markers=mapData,
+        fit_markers_to_bounds = True       
         
     )
     return render_template('map.html',trdmap=trdmap)
