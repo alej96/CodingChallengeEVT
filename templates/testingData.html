@@ -1,7 +1,19 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<p>&nbsp;</p>
+<p>
+    In case you do not have any images with Meta-Data. We have a sample folder you. 
+    You just need to download it and upload the images that you want.
+</p> 
+<p>
+    <strong>Note</strong> that not all the images in this Dataset will have GPS Meta-Data. This is done in purpose to chose some error handling. 
+    In reality, only 2% of the images have any kind of location information. I know, it is very low percentage!!!
+    When you open the Map and the image do not have GPS information. You will see a <span style="color: #ff0000;">red</span>  marker at location (0,0) 
+    and the imges with unknown location will be shown there!
+</p>
+<p ><strong>Please click the link below to download a sample data-set to test the App:  </strong></p>
 
-    Please download test data folder
-    
+  <a href="https://github.com/alej96/CodingChallengeEVT/raw/alejandro-master/testData.zip" download>Download Data File</a>
+
 {% endblock content %}
