@@ -15,6 +15,6 @@ You can also install the application locally. You just follow the steps
 3) Using the command shell, set up your working directory in the folder that contains your folder
 4) Run `export FLASK_APP=main.py`
 5) Then `python -m flask run`
-6) You will get an local IP Address like `http://127.0.0.1:5000/` 
-7) Paste it into you browser
+6) You will get a local IP Address like `http://127.0.0.1:5000/` 
+7) Paste it into your browser
 
